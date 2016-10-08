@@ -48,8 +48,8 @@ controller.setupWebserver(process.env.PORT,function(err,webserver) {
   });
 });
 
-controller.on('slash_command',function(bot,message) {
-    console.log('slash command', bot,message)
+controller.on('538',function(bot,message) {
+    console.log('538', bot,message)
     // reply to slash command
     bot.replyPublic(message,'Everyone can see the results of this slash command');
 })
