@@ -22,32 +22,6 @@
 //   file.write(data.toString('binary'), 'binary');
 // });
 
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-           ______     ______     ______   __  __     __     ______
-          /\  == \   /\  __ \   /\__  _\ /\ \/ /    /\ \   /\__  _\
-          \ \  __<   \ \ \/\ \  \/_/\ \/ \ \  _"-.  \ \ \  \/_/\ \/
-           \ \_____\  \ \_____\    \ \_\  \ \_\ \_\  \ \_\    \ \_\
-            \/_____/   \/_____/     \/_/   \/_/\/_/   \/_/     \/_/
-            
-This is a sample Slack Button application that provides a custom
-Slash command.
-This bot demonstrates many of the core features of Botkit:
-*
-* Authenticate users with Slack using OAuth
-* Receive messages using the slash_command event
-* Reply to Slash command both publicly and privately
-# RUN THE BOT:
-  Create a Slack app. Make sure to configure at least one Slash command!
-    -> https://api.slack.com/applications/new
-  Run your bot from the command line:
-    clientId=<my client id> clientSecret=<my client secret> port=3000 node bot.js
-    Note: you can test your oauth authentication locally, but to use Slash commands
-    in Slack, the app must be hosted at a publicly reachable IP or host.
-# EXTEND THE BOT:
-  Botkit has many features for building cool and useful bots!
-  Read all about it here:
-    -> http://howdy.ai/botkit
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 var Botkit = require('botkit');
 
 if (!process.env.clientId || !process.env.clientSecret || !process.env.PORT) {
@@ -60,14 +34,11 @@ var controller = Botkit.slackbot({
 }).configureSlackApp({
     clientId: process.env.clientId,
     clientSecret: process.env.clientSecret,
-    scopes: ['commands'],
+    scopes: ['commands', 'bot', 'channels:write', 'channels:read', 'chat:write:bot', 'chat:write:user', 'reactions:read', 'reactions:write'],
   });
 
-
 controller.setupWebserver(process.env.PORT,function(err,webserver) {
-
   controller.createWebhookEndpoints(controller.webserver);
-
   controller.createOauthEndpoints(controller.webserver,function(err,req,res) {
     if (err) {
       res.status(500).send('ERROR: ' + err);
@@ -77,9 +48,8 @@ controller.setupWebserver(process.env.PORT,function(err,webserver) {
   });
 });
 
-controller.on('538',function(bot,message) {
-
-  bot.replyPublic(message,'<@' + message.user + '> is cool!');
-  bot.replyPrivate(message,'*nudge nudge wink wink*');
-
-});
+controller.on('slash_command',function(bot,message) {
+    console.log('slash command', bot,message)
+    // reply to slash command
+    bot.replyPublic(message,'Everyone can see the results of this slash command');
+})
