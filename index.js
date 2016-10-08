@@ -7,23 +7,11 @@ if (!process.env.clientId || !process.env.clientSecret || !process.env.PORT) {
 
 var controller = Botkit.slackbot({
   json_file_store: './db_slackbutton_slashcommand/',
-})
-
-var bot = controller.spawn({
+}).configureSlackApp({
     clientId: process.env.clientId,
     clientSecret: process.env.clientSecret,
     scopes: ['commands', 'bot', 'chat:write:bot', 'chat:write:user', 'reactions:read', 'reactions:write'],
-})
-
-bot.startRTM()
-
-bot.api.team.info({}, (err, res) => {
-    controller.storage.teams.save({id: res.team.id}, (err) => {
-        if (err) {
-            console.error(err)
-        }
-    })
-})
+  });
 
 controller.setupWebserver(process.env.PORT,function(err,webserver) {
   controller.createWebhookEndpoints(controller.webserver);
@@ -37,6 +25,8 @@ controller.setupWebserver(process.env.PORT,function(err,webserver) {
 });
 
 controller.on('slash_command', function (slashCommand, message) {
+
+    console.log('slash_command', slashCommand, message)
 
     switch (message.command) {
         case "/echo": //handle the `/echo` slash command. We might have others assigned to this app too!
@@ -71,5 +61,4 @@ controller.on('slash_command', function (slashCommand, message) {
 
     }
 
-})
-;
+});
