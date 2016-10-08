@@ -64,7 +64,7 @@ var controller = Botkit.slackbot({
   });
 
 
-controller.setupWebserver(process.env.port,function(err,webserver) {
+controller.setupWebserver(process.env.PORT,function(err,webserver) {
 
   controller.createWebhookEndpoints(controller.webserver);
 
