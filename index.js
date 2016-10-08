@@ -1,27 +1,3 @@
-// var webshot = require('webshot')
-// var fs = require('fs')
-
-// var options = {
-//   shotOffset: {
-//     top: 340,
-//     left: 250,
-//     right: 250,
-//     bottom: 550
-//   },
-//   shotSize: { 
-//     width: 'window',
-//     height: 'window'
-//   }
-// }
-
-// var renderStream = webshot('http://projects.fivethirtyeight.com/2016-election-forecast/', options)
-
-// var file = fs.createWriteStream('538.png', {encoding: 'binary'});
-
-// renderStream.on('data', function(data) {
-//   file.write(data.toString('binary'), 'binary');
-// });
-
 var Botkit = require('botkit');
 
 if (!process.env.clientId || !process.env.clientSecret || !process.env.PORT) {
@@ -31,11 +7,23 @@ if (!process.env.clientId || !process.env.clientSecret || !process.env.PORT) {
 
 var controller = Botkit.slackbot({
   json_file_store: './db_slackbutton_slashcommand/',
-}).configureSlackApp({
+})
+
+var bot = controller.spawn({
     clientId: process.env.clientId,
     clientSecret: process.env.clientSecret,
-    scopes: ['commands', 'bot', 'channels:write', 'channels:read', 'chat:write:bot', 'chat:write:user', 'reactions:read', 'reactions:write'],
-  });
+    scopes: ['commands', 'bot', 'chat:write:bot', 'chat:write:user', 'reactions:read', 'reactions:write'],
+})
+
+bot.startRTM()
+
+bot.api.team.info({}, (err, res) => {
+    controller.storage.teams.save({id: res.team.id}, (err) => {
+        if (err) {
+            console.error(err)
+        }
+    })
+})
 
 controller.setupWebserver(process.env.PORT,function(err,webserver) {
   controller.createWebhookEndpoints(controller.webserver);
@@ -77,7 +65,7 @@ controller.on('slash_command', function (slashCommand, message) {
         case "/538":
             slashCommand.replyPublic(message, "538 graph coming here");
             break;
-            
+
         default:
             slashCommand.replyPublic(message, "I'm afraid I don't know how to " + message.command + " yet.");
 
