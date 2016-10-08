@@ -50,7 +50,7 @@ This bot demonstrates many of the core features of Botkit:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 var Botkit = require('botkit');
 
-if (!process.env.clientId || !process.env.clientSecret || !process.env.port) {
+if (!process.env.clientId || !process.env.clientSecret || !process.env.PORT) {
   console.log('Error: Specify clientId clientSecret and port in environment');
   process.exit(1);
 }
@@ -76,7 +76,6 @@ controller.setupWebserver(process.env.port,function(err,webserver) {
     }
   });
 });
-
 
 controller.on('538',function(bot,message) {
 
