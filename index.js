@@ -45,12 +45,7 @@ controller.on('slash_command', function (slashCommand, message) {
 
       fivethirtyeight.getForecast().then(forecastImageUrl => {
         console.log('getForecast.success', forecastImageUrl)
-        slashCommand.replyPublic(message, {
-            attachments: [{
-                title: 'Most recent forecast',
-                image_url: forecastImageUrl,
-            }]
-        })
+        slashCommand.replyPublic(message, forecastImageUrl)
       }).catch(err => {
           console.log('getForecast.err', err)
       })
