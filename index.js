@@ -22,9 +22,9 @@ controller.configureSlackApp({
   scopes: ['commands', 'bot', 'chat:write:bot']
 })
 
-controller.setupWebserver(process.env.PORT, function (err, webserver) {
+controller.setupWebserver(process.env.PORT, (err, webserver) => {
   controller.createWebhookEndpoints(controller.webserver)
-  controller.createOauthEndpoints(controller.webserver, function (err, req, res) {
+  controller.createOauthEndpoints(controller.webserver,  (err, req, res) => {
     if (err) {
       res.status(500).send('ERROR: ' + err)
     } else {
@@ -33,7 +33,7 @@ controller.setupWebserver(process.env.PORT, function (err, webserver) {
   })
 })
 
-controller.on('slash_command', function (slashCommand, message) {
+controller.on('slash_command', (slashCommand, message) => {
   switch (message.command) {
     case '/538':
       fivethirtyeight.getForecast().then(forecastImageUrl => {

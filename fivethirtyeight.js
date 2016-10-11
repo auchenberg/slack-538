@@ -2,11 +2,11 @@
 
 var webshot = require('webshot')
 var fs = require('fs')
-
 var aws = require('aws-sdk')
-var s3 = new aws.S3()
 var UploadStream = require('s3-stream-upload')
 var dateFormat = require('dateformat')
+
+var s3 = new aws.S3()
 
 var options = {
   shotOffset: {
@@ -40,16 +40,12 @@ class fivethirtyeight {
     var url = `https://${params.Bucket}.s3.amazonaws.com/${params.Key}`
 
     return new Promise((resolve, reject) => {
-      s3.headObject(headPrams, function (err, data) {
+      s3.headObject(headPrams, (err, data) => {
         if (err) { // Not found, time to generate
           var renderStream = webshot('http://projects.fivethirtyeight.com/2016-election-forecast/', options)
           renderStream.pipe(UploadStream(s3, params))
-            .on('error', function (err) {
-              reject(err)
-            })
-            .on('finish', function () {
-              resolve(url)
-            })
+            .on('error', reject)
+            .on('finish', () => resolve(url))
         } else {
           resolve(url)
         }
