@@ -1,7 +1,7 @@
 {
   "name": "slack-538",
   "version": "1.0.0",
-  "description": "",
+  "description": "Slack Bot to show the 538 forecast of the American Election 2016",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

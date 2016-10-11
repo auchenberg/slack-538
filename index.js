@@ -2,14 +2,14 @@
 
 var Botkit = require('botkit')
 var fivethirtyeight = require('./fivethirtyeight')
-var url = require('url');
+var url = require('url')
 
-var redisURL = url.parse(process.env.REDISCLOUD_URL);
+var redisURL = url.parse(process.env.REDISCLOUD_URL)
 var redisConfig = {
-    namespace: 'slack-538',
-    host: redisURL.hostname,
-    port: redisURL.port,
-    auth_pass: redisURL.auth.split(":")[1]
+  namespace: 'slack-538',
+  host: redisURL.hostname,
+  port: redisURL.port,
+  auth_pass: redisURL.auth.split(':')[1]
 }
 
 var controller = Botkit.slackbot({
@@ -34,31 +34,24 @@ controller.setupWebserver(process.env.PORT, function (err, webserver) {
 })
 
 controller.on('slash_command', function (slashCommand, message) {
-  console.log('slash_command', slashCommand, message)
-
   switch (message.command) {
-
     case '/538':
-
-      // if (message.token !== process.env.VERIFICATION_TOKEN) return; //just ignore it.
-
       fivethirtyeight.getForecast().then(forecastImageUrl => {
         console.log('getForecast.success', forecastImageUrl)
         slashCommand.replyPublic(message, {
-            text: 'Most recent 538 forecast',
-            attachments: [{
-                image_url: forecastImageUrl,
-            }]
+          text: 'Most recent 538 forecast',
+          attachments: [{
+            image_url: forecastImageUrl
+          }]
         })
       }).catch(err => {
-          slashCommand.replyPrivate(message, 'Something went wrong', err)
-          console.log('getForecast.err', err)
+        slashCommand.replyPrivate(message, 'Something went wrong', err)
+        console.log('getForecast.err', err)
       })
 
       break
 
     default:
       slashCommand.replyPublic(message, "I'm afraid I don't know how to " + message.command + ' yet.')
-
   }
 })
