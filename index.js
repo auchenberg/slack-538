@@ -19,7 +19,7 @@ var controller = Botkit.slackbot({
 controller.configureSlackApp({
   clientId: process.env.clientId,
   clientSecret: process.env.clientSecret,
-  scopes: ['commands', 'bot', 'chat:write:bot', 'chat:write:user']
+  scopes: ['commands', 'bot', 'chat:write:bot']
 })
 
 controller.setupWebserver(process.env.PORT, function (err, webserver) {
