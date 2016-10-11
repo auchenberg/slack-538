@@ -1,5 +1,7 @@
 # slack-538
-Slack Bot to show the 538 forecast of the American Election 2016
+Slack Bot to show the 538 forecast of the American Election 2016 directly in your stream.
+
+![](.readme/example.png)
 
 # Install
 
