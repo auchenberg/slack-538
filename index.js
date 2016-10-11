@@ -2,6 +2,7 @@
 
 var Botkit = require('botkit')
 var fivethirtyeight = require('./fivethirtyeight')
+var url = require('url');
 
 var redisURL = url.parse(process.env.REDISCLOUD_URL);
 var redisConfig = {
