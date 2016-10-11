@@ -44,12 +44,15 @@ controller.on('slash_command', function (slashCommand, message) {
       slashCommand.replyPrivate(message, 'Contacting 538. Stay tuned...')
 
       fivethirtyeight.getForecast().then(forecastImageUrl => {
+        console.log('getForecast.success', forecastImageUrl)
         slashCommand.replyPublic(message, {
             attachments: [{
                 title: 'Most recent forecast',
                 image_url: forecastImageUrl,
             }]
         })
+      }).catch(err => {
+          console.log('getForecast.err', err)
       })
 
       break
