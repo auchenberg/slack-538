@@ -39,7 +39,7 @@ controller.on('slash_command', function (slashCommand, message) {
       fivethirtyeight.getForecast().then(forecastImageUrl => {
         console.log('getForecast.success', forecastImageUrl)
         slashCommand.replyPublic(message, {
-          text: 'Most recent 538 forecast',
+          text: 'Latest presidential polling forecasts from fivethirtyeight.com',
           attachments: [{
             image_url: forecastImageUrl
           }]
