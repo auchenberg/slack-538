@@ -38,8 +38,9 @@ controller.on('slash_command', function (slashCommand, message) {
       slashCommand.replyPrivate(message, 'Contacting 538. Stay tuned...')
 
       fivethirtyeight.getForecast().then(forecastImageUrl => {
-        slashCommand.replyPublic(message, '538 graph coming here', {
+        slashCommand.replyPublic(message, {
             attachments: [{
+                title: 'Most recent forecast',
                 image_url: forecastImageUrl,
             }]
         })
