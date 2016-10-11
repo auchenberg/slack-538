@@ -1,3 +1,5 @@
+'use strict'
+
 var Botkit = require('botkit')
 var fivethirtyeight = require('./fivethirtyeight')
 

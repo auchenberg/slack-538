@@ -1,3 +1,5 @@
+'use strict'
+
 var webshot = require('webshot')
 var fs = require('fs')
 
