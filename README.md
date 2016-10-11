@@ -1,5 +1,5 @@
 # slack-538
-Slack Bot to show the 538 forecast of the American Election 2016 directly in your stream.
+Get the latest presidential polling forecasts from fivethirtyeight.com in Slack
 
 ![](.readme/example.png)
 
