@@ -1,4 +1,4 @@
-![](.readme/logo.png)
+![](.readme/logo2.png)
 
 # slack-538
 Get the latest presidential polling forecasts from fivethirtyeight.com in Slack
