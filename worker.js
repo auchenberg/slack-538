@@ -3,7 +3,8 @@
 var fivethirtyeight = require('./fivethirtyeight')
 var schedule = require('node-schedule')
 
-var fetch = function() {
+var fetch = () => {
+  console.log('worker.fetch')
 
   fivethirtyeight.getForecast().then(forecastImageUrl => {
     console.log('worker.getForecast.success', forecastImageUrl)
@@ -12,9 +13,11 @@ var fetch = function() {
     console.error('worker.getForecast.failed', err)
     process.exit()
   })
-
 }
 
-schedule.scheduleJob('* /30 * * *', function(){
+console.log('worker.started')
+
+schedule.scheduleJob('*/15 * * * *', () => {
+  console.log('worker.run')
   fetch()
 })
