@@ -36,18 +36,20 @@ var params = {
 
 class fivethirtyeight {
 
-  getForecast () {
-    var url = `https://${params.Bucket}.s3.amazonaws.com/${params.Key}`
+  getLastForecastUrl () { 
+    return `https://${params.Bucket}.s3.amazonaws.com/${params.Key}` 
+  }
 
+  getForecast () {
     return new Promise((resolve, reject) => {
       s3.headObject(headPrams, (err, data) => {
         if (err) { // Not found, time to generate
           var renderStream = webshot('http://projects.fivethirtyeight.com/2016-election-forecast/', options)
           renderStream.pipe(UploadStream(s3, params))
             .on('error', reject)
-            .on('finish', () => resolve(url))
+            .on('finish', () => resolve(this.getLastForecastUrl()))
         } else {
-          resolve(url)
+          resolve(this.getLastForecastUrl())
         }
       })
     })
