@@ -23,7 +23,7 @@ var options = {
 
 var headPrams = {
   Bucket: process.env.S3_BUCKET_NAME,
-  Key: '538_forecast_' + dateFormat(Date.now(), 'dd_mm_yyyy_hh') + '.png'
+  Key: '538_forecast_' + dateFormat(Date.now(), 'dd_mm_yyyy_HH') + '.png'
 }
 
 var params = {
