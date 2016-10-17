@@ -4,7 +4,7 @@ var Botkit = require('botkit')
 var fivethirtyeight = require('./fivethirtyeight')
 var url = require('url')
 
-var redisURL = url.parse(process.env.REDISCLOUD_URL)
+var redisURL = url.parse(process.env.REDIS_URL)
 var redisConfig = {
   namespace: 'slack-538',
   host: redisURL.hostname,
