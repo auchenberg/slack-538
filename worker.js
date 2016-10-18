@@ -2,6 +2,7 @@
 
 var fivethirtyeight = require('./fivethirtyeight')
 var schedule = require('node-schedule')
+var dateFormat = require('dateformat')
 
 var fetch = () => {
   console.log('worker.fetch', Date.now(), dateFormat(Date.now(), 'dd_mm_yyyy_HH'))
@@ -15,9 +16,9 @@ var fetch = () => {
   })
 }
 
-console.log('worker.started')
-
 schedule.scheduleJob('*/15 * * * *', () => {
   console.log('worker.run')
   fetch()
 })
+
+console.log('worker.started')
