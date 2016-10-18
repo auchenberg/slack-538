@@ -37,6 +37,7 @@ var params = {
 class fivethirtyeight {
 
   getLastForecastUrl () { 
+    console.log('fivethirtyeight.getLastForecastUrl', Date.now(), dateFormat(Date.now(), 'dd_mm_yyyy_HH'))
     return `https://${params.Bucket}.s3.amazonaws.com/${params.Key}` 
   }
 
