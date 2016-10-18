@@ -21,14 +21,8 @@ var options = {
   }
 }
 
-var headPrams = {
-  Bucket: process.env.S3_BUCKET_NAME,
-  Key: '538_forecast_' + dateFormat(Date.now(), 'dd_mm_yyyy_HH') + '.png'
-}
-
 var params = {
-  Bucket: headPrams.Bucket,
-  Key: headPrams.Key,
+  Bucket: process.env.S3_BUCKET_NAME,
   ContentType: 'image/png',
   Expires: 60,
   ACL: 'public-read'
@@ -36,17 +30,32 @@ var params = {
 
 class fivethirtyeight {
 
+  getLastForecastKey() {
+    return '538_forecast_' + dateFormat(Date.now(), 'dd_mm_yyyy_HH') + '.png'
+  }
+  
   getLastForecastUrl () { 
-    console.log('fivethirtyeight.getLastForecastUrl', Date.now(), dateFormat(Date.now(), 'dd_mm_yyyy_HH'))
-    return `https://${params.Bucket}.s3.amazonaws.com/${params.Key}` 
+    console.log('fivethirtyeight.getLastForecastUrl', dateFormat(Date.now(), 'dd_mm_yyyy_HH'))
+    var key = this.getLastForecastKey()
+    return `https://${params.Bucket}.s3.amazonaws.com/${key}` 
   }
 
   getForecast () {
+
+    var headParams = {
+     Bucket: params.Bucket,
+     Key: this.getLastForecastKey()
+    }
+
     return new Promise((resolve, reject) => {
-      s3.headObject(headPrams, (err, data) => {
+      s3.headObject(headParams, (err, data) => {
         if (err) { // Not found, time to generate
-          var renderStream = webshot('http://projects.fivethirtyeight.com/2016-election-forecast/', options)
-          renderStream.pipe(UploadStream(s3, params))
+          var renderStream = webshot('http://projects.fivethirtyewight.com/2016-election-forecast/', options)
+          
+          var reqParams = params
+          var reqParamsKey = headParams.Key
+
+          renderStream.pipe(UploadStream(s3, reqParams))
             .on('error', reject)
             .on('finish', () => resolve(this.getLastForecastUrl()))
         } else {

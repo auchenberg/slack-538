@@ -4,7 +4,7 @@ var fivethirtyeight = require('./fivethirtyeight')
 var schedule = require('node-schedule')
 
 var fetch = () => {
-  console.log('worker.fetch')
+  console.log('worker.fetch', Date.now(), dateFormat(Date.now(), 'dd_mm_yyyy_HH'))
 
   fivethirtyeight.getForecast().then(forecastImageUrl => {
     console.log('worker.getForecast.success', forecastImageUrl)
