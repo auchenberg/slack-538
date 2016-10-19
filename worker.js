@@ -10,7 +10,7 @@ var fetch = () => {
   fivethirtyeight.getForecast().then(forecastImageUrl => {
     console.log('worker.getForecast.success', forecastImageUrl)
   }).catch(err => {
-    console.error('worker.getForecast.failed', err)
+    console.log('worker.getForecast.failed', err)
   })
 }
 

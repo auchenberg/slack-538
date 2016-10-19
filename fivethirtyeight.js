@@ -34,6 +34,8 @@ class fivethirtyeight {
   }
 
   getForecast () {
+    console.log('fivethirtyeight.getForecast', dateFormat(Date.now(), 'dd_mm_yyyy_HH'))
+
     var headParams = {
      Bucket: process.env.S3_BUCKET_NAME,
      Key: this.getLastForecastKey()
@@ -42,6 +44,7 @@ class fivethirtyeight {
     return new Promise((resolve, reject) => {
       s3.headObject(headParams, (err, data) => {
         if (err) { // Not found, time to generate
+          console.log('fivethirtyeight.getForecast.not.found', dateFormat(Date.now(), 'dd_mm_yyyy_HH'))
           var renderStream = webshot('http://projects.fivethirtyewight.com/2016-election-forecast/', options)
           
           var params = {
@@ -56,6 +59,7 @@ class fivethirtyeight {
             .on('error', reject)
             .on('finish', () => resolve(this.getLastForecastUrl()))
         } else {
+          console.log('fivethirtyeight.getForecast.found', dateFormat(Date.now(), 'dd_mm_yyyy_HH'))
           resolve(this.getLastForecastUrl())
         }
       })
