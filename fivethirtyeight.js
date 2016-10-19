@@ -13,7 +13,7 @@ var options = {
     top: 340,
     left: 250,
     right: 250,
-    bottom: 550
+    bottom: 545
   },
   shotSize: {
     width: 'window',
