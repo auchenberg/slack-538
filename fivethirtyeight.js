@@ -57,7 +57,10 @@ class fivethirtyeight {
 
           renderStream.pipe(UploadStream(s3, params))
             .on('error', reject)
-            .on('finish', () => resolve(this.getLastForecastUrl()))
+            .on('finish', () => {
+              console.log('fivethirtyeight.getForecast.generated', dateFormat(Date.now(), 'dd_mm_yyyy_HH'))
+              resolve(this.getLastForecastUrl())
+            })
         } else {
           console.log('fivethirtyeight.getForecast.found', dateFormat(Date.now(), 'dd_mm_yyyy_HH'))
           resolve(this.getLastForecastUrl())
