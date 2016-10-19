@@ -45,7 +45,7 @@ class fivethirtyeight {
       s3.headObject(headParams, (err, data) => {
         if (err) { // Not found, time to generate
           console.log('fivethirtyeight.getForecast.not.found', dateFormat(Date.now(), 'dd_mm_yyyy_HH'))
-          var renderStream = webshot('http://projects.fivethirtyewight.com/2016-election-forecast/', options)
+          var renderStream = webshot('http://projects.fivethirtyeight.com/2016-election-forecast/', options)
           
           var params = {
             Bucket: process.env.S3_BUCKET_NAME,
