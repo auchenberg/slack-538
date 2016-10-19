@@ -14,7 +14,7 @@ var fetch = () => {
   })
 }
 
-schedule.scheduleJob('*/15 * * * *', () => {
+schedule.scheduleJob('*/5 * * * *', () => {
   console.log('worker.run')
   fetch()
 })
